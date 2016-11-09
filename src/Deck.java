@@ -21,10 +21,11 @@ public class Deck {
     }
 
     public int hasStraight() {
+        boolean isSpecal = points[0] == 1 & points[NUMBER - 1] == 13;
         boolean isStraight = true;
         int index = 0;
         int noNeedCompair = 0;
-        if (points[0] == 1 & points[NUMBER - 1] == 13) {
+        if (isSpecal) {
             index += 1;
             noNeedCompair += 1;
         }
@@ -32,7 +33,11 @@ public class Deck {
             isStraight &= points[index] + 1 == points[index + 1];
         }
         if (isStraight) {
-            this.keyPoint[0] = points[0];
+            if (isSpecal) {
+                this.keyPoint[0] = points[1];
+            } else {
+                this.keyPoint[0] = points[0];
+            }
             return Rank.STRAIGHT.getRank();
         } else
             return Rank.NONERANK.getRank();
