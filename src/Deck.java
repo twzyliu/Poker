@@ -11,6 +11,7 @@ public class Deck {
     private List<Card> cardList = new ArrayList<>();
     private int[] points = new int[NUMBER];
     private Rank rank;
+    private int keyPoint[] = {0, 0, 0, 0, 0};
 
     public Deck(List<Card> cardList) {
         this.cardList = cardList;
@@ -32,6 +33,7 @@ public class Deck {
             isStraight &= points[index] + 1 == points[index + 1];
         }
         if (isStraight) {
+            this.keyPoint[0] = points[0];
             return Rank.STRAIGHT.getRank();
         } else
             return Rank.NONERANK.getRank();
@@ -58,6 +60,7 @@ public class Deck {
             }
         }
         if (count == 4) {
+            this.keyPoint[0] = keyPoint;
             return Rank.FOUROfAKIND.getRank();
         } else {
             return Rank.NONERANK.getRank();
@@ -73,6 +76,7 @@ public class Deck {
             }
         }
         if (count == 3) {
+            this.keyPoint[0] = keyPoint;
             return Rank.THREEOfAKIND.getRank();
         } else {
             return Rank.NONERANK.getRank();
@@ -80,9 +84,10 @@ public class Deck {
     }
 
     public int hasPair() {
+        int pairNum = 0;
         int rank = Rank.NONERANK.getRank();
         int count;
-        int keyPoints[] = {points[1], points[3]};
+        int keyPoints[] = {points[3], points[1]};
         for (int keyPoint : keyPoints) {
             count = 0;
             for (int index = 0; index < NUMBER; index++) {
@@ -91,7 +96,14 @@ public class Deck {
                 }
             }
             if (count == 2) {
+                this.keyPoint[pairNum] = keyPoint;
+                pairNum += 1;
                 rank += Rank.PAIR.getRank();
+            }
+        }
+        for (int index = 0; index < NUMBER; index++) {
+            if (points[index] != keyPoints[0] & points[index] != keyPoints[1]) {
+                this.keyPoint[pairNum] = points[index];
             }
         }
         return rank;
@@ -105,11 +117,12 @@ public class Deck {
         int hasThreeOfAKind = hasThreeOfAKind();
         int hasPair = hasPair();
 
-        if (hasStraight > 0) {
-            rank += hasStraight;
-        }
         if (hasFlush > 0) {
             rank += hasFlush;
+            keyPoint = getReverseSort();
+        }
+        if (hasStraight > 0) {
+            rank += hasStraight;
             return rank;
         }
         if (hasFourOfAKind > 0) {
@@ -121,6 +134,17 @@ public class Deck {
         if (hasPair > 0) {
             rank += hasPair;
         }
+        if (rank == 0) {
+            keyPoint = getReverseSort();
+        }
         return rank;
+    }
+
+    private int[] getReverseSort() {
+        int[] reverse = new int[NUMBER];
+        for (int index = 0; index < NUMBER; index++) {
+            reverse[index] = points[NUMBER - 1 - index];
+        }
+        return reverse;
     }
 }

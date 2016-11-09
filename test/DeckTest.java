@@ -161,4 +161,5 @@ public class DeckTest {
         Deck deck2 = new Deck(cardList2);
         assertThat(deck1.calculateTypeRank(), is(deck2.calculateTypeRank()));
     }
+
 }
