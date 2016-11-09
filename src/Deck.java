@@ -62,4 +62,19 @@ public class Deck {
             return Rank.NONERANK.getRank();
         }
     }
+
+    public int isThreeOfAKind() {
+        int count = 0;
+        int ketPoint = points[(NUMBER - 1) / 2];
+        for (int index = 0; index < NUMBER; index++) {
+            if (points[index] == ketPoint) {
+                count += 1;
+            }
+        }
+        if (count == 3) {
+            return Rank.THREEOfAKIND.getRank();
+        } else {
+            return Rank.NONERANK.getRank();
+        }
+    }
 }

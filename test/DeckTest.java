@@ -91,4 +91,22 @@ public class DeckTest {
     public void should_return_0_when_desk_hasnot_FourOfAKind() throws Exception {
         assertThat(deck.isFourOfAKind(), is(Rank.NONERANK.getRank()));
     }
+
+    @Test
+    public void should_return_rank_when_desk_has_ThreeOfAKind() throws Exception {
+        List<Card> cardList = new ArrayList<Card>(){{
+            add(new Card(5, Color.C));
+            add(new Card(5, Color.S));
+            add(new Card(9, Color.H));
+            add(new Card(4, Color.C));
+            add(new Card(5, Color.D));
+        }};
+        Deck deck = new Deck(cardList);
+        assertThat(deck.isThreeOfAKind(), is(Rank.THREEOfAKIND.getRank()));
+    }
+
+    @Test
+    public void should_return_0_when_desk_hasnot_ThreeOfAKind() throws Exception {
+        assertThat(deck.isThreeOfAKind(), is(Rank.NONERANK.getRank()));
+    }
 }
