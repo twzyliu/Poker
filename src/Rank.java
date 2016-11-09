@@ -14,6 +14,7 @@ public class Rank {
         return rank;
     }
 
-    public static Rank NONERANK = new Rank(0);
-    public static Rank FLUSH = new Rank(0x8 * STEP);
+    public static final Rank NONERANK = new Rank(0);
+    public static final Rank STRAIGHT = new Rank(0x8 * STEP);
+    public static final Rank FLUSH = new Rank(0x9 * STEP);
 }

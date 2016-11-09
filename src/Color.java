@@ -8,8 +8,8 @@ public class Color {
         this.color = color;
     }
 
-    public static Color S = new Color("Spades");
-    public static Color H = new Color("Hearts");
-    public static Color C = new Color("Clubs");
-    public static Color D = new Color("Diamonds");
+    public static final Color S = new Color("Spades");
+    public static final Color H = new Color("Hearts");
+    public static final Color C = new Color("Clubs");
+    public static final Color D = new Color("Diamonds");
 }

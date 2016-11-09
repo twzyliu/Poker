@@ -19,14 +19,32 @@ public class Deck {
         Arrays.sort(points);
     }
 
+    public int isStraight() {
+        boolean isStraight = true;
+        int i = 0;
+        int flag = 1;
+        if (points[0] == 1 & points[NUMBER - 1] == 13) {
+            i += 1;
+            flag += 1;
+        }
+        for (; i < NUMBER - flag; i++) {
+            isStraight &= points[i] + 1 == points[i + 1];
+        }
+        if (isStraight) {
+            return Rank.STRAIGHT.getRank();
+        } else
+            return Rank.NONERANK.getRank();
+    }
+
     public int isFlush() {
         boolean isFlush = true;
         for (int i = 0; i < NUMBER - 1; i++) {
-            isFlush &= points[i] + 1 == points[i + 1];
+            isFlush &= (cardList.get(i).getColor().equals(cardList.get(i + 1).getColor()));
         }
         if (isFlush) {
             return Rank.FLUSH.getRank();
-        }else
+        } else {
             return Rank.NONERANK.getRank();
+        }
     }
 }
