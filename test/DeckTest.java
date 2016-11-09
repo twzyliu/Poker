@@ -140,4 +140,25 @@ public class DeckTest {
     public void should_return_0_when_desk_hasnot_pair() throws Exception {
         assertThat(deck.hasPair(), is(Rank.NONERANK.getRank()));
     }
+
+    @Test
+    public void should_get_same_typerank_when_two_desks_are_has_same_type() throws Exception {
+        List<Card> cardList1 = new ArrayList<Card>() {{
+            add(new Card(2, Color.C));
+            add(new Card(2, Color.S));
+            add(new Card(3, Color.H));
+            add(new Card(3, Color.C));
+            add(new Card(3, Color.D));
+        }};
+        List<Card> cardList2 = new ArrayList<Card>() {{
+            add(new Card(5, Color.C));
+            add(new Card(5, Color.S));
+            add(new Card(8, Color.H));
+            add(new Card(8, Color.C));
+            add(new Card(8, Color.D));
+        }};
+        Deck deck1 = new Deck(cardList1);
+        Deck deck2 = new Deck(cardList2);
+        assertThat(deck1.calculateTypeRank(), is(deck2.calculateTypeRank()));
+    }
 }

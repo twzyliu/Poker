@@ -10,6 +10,7 @@ public class Deck {
     public static final int NUMBER = 5;
     private List<Card> cardList = new ArrayList<>();
     private int[] points = new int[NUMBER];
+    private Rank rank;
 
     public Deck(List<Card> cardList) {
         this.cardList = cardList;
@@ -92,6 +93,33 @@ public class Deck {
             if (count == 2) {
                 rank += Rank.PAIR.getRank();
             }
+        }
+        return rank;
+    }
+
+    public int calculateTypeRank() {
+        int rank = 0;
+        int hasFourOfAKind = hasFourOfAKind();
+        int hasFlush = hasFlush();
+        int hasStraight = hasStraight();
+        int hasThreeOfAKind = hasThreeOfAKind();
+        int hasPair = hasPair();
+
+        if (hasStraight > 0) {
+            rank += hasStraight;
+        }
+        if (hasFlush > 0) {
+            rank += hasFlush;
+            return rank;
+        }
+        if (hasFourOfAKind > 0) {
+            rank += hasFourOfAKind;
+        }
+        if (hasThreeOfAKind > 0) {
+            rank += hasThreeOfAKind;
+        }
+        if (hasPair > 0) {
+            rank += hasPair;
         }
         return rank;
     }
