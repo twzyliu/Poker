@@ -13,22 +13,22 @@ public class Deck {
 
     public Deck(List<Card> cardList) {
         this.cardList = cardList;
-        for (int i = 0; i < NUMBER; i++) {
-            points[i] = cardList.get(i).getPoint();
+        for (int index = 0; index < NUMBER; index++) {
+            points[index] = cardList.get(index).getPoint();
         }
         Arrays.sort(points);
     }
 
     public int isStraight() {
         boolean isStraight = true;
-        int i = 0;
-        int flag = 1;
+        int index = 0;
+        int noNeedCompair = 0;
         if (points[0] == 1 & points[NUMBER - 1] == 13) {
-            i += 1;
-            flag += 1;
+            index += 1;
+            noNeedCompair += 1;
         }
-        for (; i < NUMBER - flag; i++) {
-            isStraight &= points[i] + 1 == points[i + 1];
+        for (; index < NUMBER - 1 - noNeedCompair; index++) {
+            isStraight &= points[index] + 1 == points[index + 1];
         }
         if (isStraight) {
             return Rank.STRAIGHT.getRank();
@@ -43,6 +43,21 @@ public class Deck {
         }
         if (isFlush) {
             return Rank.FLUSH.getRank();
+        } else {
+            return Rank.NONERANK.getRank();
+        }
+    }
+
+    public int isFourOfAKind() {
+        int count = 0;
+        int ketPoint = points[(NUMBER - 1) / 2];
+        for (int index = 0; index < NUMBER; index++) {
+            if (points[index] == ketPoint) {
+                count += 1;
+            }
+        }
+        if (count == 4) {
+            return Rank.FOUROfAKIND.getRank();
         } else {
             return Rank.NONERANK.getRank();
         }
