@@ -159,7 +159,49 @@ public class DeckTest {
         }};
         Deck deck1 = new Deck(cardList1);
         Deck deck2 = new Deck(cardList2);
-        assertThat(deck1.calculateTypeRank(), is(deck2.calculateTypeRank()));
+        assertThat(deck1.getSameTypeRank(), is(deck2.getSameTypeRank()));
+    }
+
+    @Test
+    public void should_return_win_when_two_desks_are_has_different_type() throws Exception {
+        List<Card> cardList1 = new ArrayList<Card>() {{
+            add(new Card(1, Color.C));
+            add(new Card(2, Color.S));
+            add(new Card(3, Color.H));
+            add(new Card(4, Color.C));
+            add(new Card(5, Color.D));
+        }};
+        List<Card> cardList2 = new ArrayList<Card>() {{
+            add(new Card(5, Color.C));
+            add(new Card(2, Color.S));
+            add(new Card(8, Color.H));
+            add(new Card(2, Color.C));
+            add(new Card(8, Color.D));
+        }};
+        Deck deck1 = new Deck(cardList1);
+        Deck deck2 = new Deck(cardList2);
+        assertThat(deck1.fight(deck2), is(deck1));
+    }
+
+    @Test
+    public void should_return_win_when_two_desks_are_has_same_type() throws Exception {
+        List<Card> cardList1 = new ArrayList<Card>() {{
+            add(new Card(2, Color.C));
+            add(new Card(2, Color.S));
+            add(new Card(6, Color.H));
+            add(new Card(6, Color.C));
+            add(new Card(6, Color.D));
+        }};
+        List<Card> cardList2 = new ArrayList<Card>() {{
+            add(new Card(5, Color.C));
+            add(new Card(5, Color.S));
+            add(new Card(4, Color.H));
+            add(new Card(4, Color.C));
+            add(new Card(4, Color.D));
+        }};
+        Deck deck1 = new Deck(cardList1);
+        Deck deck2 = new Deck(cardList2);
+        assertThat(deck1.fight(deck2), is(deck1));
     }
 
 }

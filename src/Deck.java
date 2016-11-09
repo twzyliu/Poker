@@ -10,7 +10,6 @@ public class Deck {
     public static final int NUMBER = 5;
     private List<Card> cardList = new ArrayList<>();
     private int[] points = new int[NUMBER];
-    private Rank rank;
     private int keyPoint[] = {0, 0, 0, 0, 0};
 
     public Deck(List<Card> cardList) {
@@ -109,30 +108,30 @@ public class Deck {
         return rank;
     }
 
-    public int calculateTypeRank() {
+    public int getSameTypeRank() {
         int rank = 0;
-        int hasFourOfAKind = hasFourOfAKind();
-        int hasFlush = hasFlush();
-        int hasStraight = hasStraight();
-        int hasThreeOfAKind = hasThreeOfAKind();
-        int hasPair = hasPair();
 
-        if (hasFlush > 0) {
-            rank += hasFlush;
+        if (hasFlush() > 0) {
+            rank += hasFlush();
             keyPoint = getReverseSort();
         }
-        if (hasStraight > 0) {
-            rank += hasStraight;
+        if (hasStraight() > 0) {
+            rank += hasStraight();
             return rank;
         }
-        if (hasFourOfAKind > 0) {
-            rank += hasFourOfAKind;
+        if (hasFourOfAKind() > 0) {
+            rank += hasFourOfAKind();
         }
-        if (hasThreeOfAKind > 0) {
-            rank += hasThreeOfAKind;
+        if (hasPair() > 0) {
+            rank += hasPair();
         }
-        if (hasPair > 0) {
-            rank += hasPair;
+        if (hasThreeOfAKind() > 0) {
+            rank += hasThreeOfAKind();
+            if (keyPoint[0] == points[0]) {
+                keyPoint[1] = points[NUMBER - 1];
+            } else {
+                keyPoint[1] = points[0];
+            }
         }
         if (rank == 0) {
             keyPoint = getReverseSort();
@@ -146,5 +145,22 @@ public class Deck {
             reverse[index] = points[NUMBER - 1 - index];
         }
         return reverse;
+    }
+
+    public Deck fight(Deck otherDesk) {
+        int myRank = getSameTypeRank() + getDifferentTypeRang();
+        int otherRank = otherDesk.getSameTypeRank() + otherDesk.getDifferentTypeRang();
+        if (myRank > otherRank) {
+            return this;
+        }
+        return otherDesk;
+    }
+
+    public int getDifferentTypeRang() {
+        int rank = 0;
+        for (int index = 0; index < NUMBER; index++) {
+            rank += keyPoint[index] * (Math.pow(0x10, NUMBER - 1 - index));
+        }
+        return rank;
     }
 }
