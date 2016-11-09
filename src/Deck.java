@@ -19,7 +19,7 @@ public class Deck {
         Arrays.sort(points);
     }
 
-    public int isStraight() {
+    public int hasStraight() {
         boolean isStraight = true;
         int index = 0;
         int noNeedCompair = 0;
@@ -36,7 +36,7 @@ public class Deck {
             return Rank.NONERANK.getRank();
     }
 
-    public int isFlush() {
+    public int hasFlush() {
         boolean isFlush = true;
         for (int i = 0; i < NUMBER - 1; i++) {
             isFlush &= (cardList.get(i).getColor().equals(cardList.get(i + 1).getColor()));
@@ -48,11 +48,11 @@ public class Deck {
         }
     }
 
-    public int isFourOfAKind() {
+    public int hasFourOfAKind() {
         int count = 0;
-        int ketPoint = points[(NUMBER - 1) / 2];
+        int keyPoint = points[(NUMBER - 1) / 2];
         for (int index = 0; index < NUMBER; index++) {
-            if (points[index] == ketPoint) {
+            if (points[index] == keyPoint) {
                 count += 1;
             }
         }
@@ -63,11 +63,11 @@ public class Deck {
         }
     }
 
-    public int isThreeOfAKind() {
+    public int hasThreeOfAKind() {
         int count = 0;
-        int ketPoint = points[(NUMBER - 1) / 2];
+        int keyPoint = points[(NUMBER - 1) / 2];
         for (int index = 0; index < NUMBER; index++) {
-            if (points[index] == ketPoint) {
+            if (points[index] == keyPoint) {
                 count += 1;
             }
         }
@@ -76,5 +76,23 @@ public class Deck {
         } else {
             return Rank.NONERANK.getRank();
         }
+    }
+
+    public int hasPair() {
+        int rank = Rank.NONERANK.getRank();
+        int count;
+        int keyPoints[] = {points[1], points[3]};
+        for (int keyPoint : keyPoints) {
+            count = 0;
+            for (int index = 0; index < NUMBER; index++) {
+                if (points[index] == keyPoint) {
+                    count += 1;
+                }
+            }
+            if (count == 2) {
+                rank += Rank.PAIR.getRank();
+            }
+        }
+        return rank;
     }
 }
